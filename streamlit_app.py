@@ -63,9 +63,19 @@ wine = st.radio(
     index=None,
 )
 
+language = st.selectbox(
+    "What language of recipe do you desire?",
+    ("English", "Spanish", "Chinese", "French", "Indian", "Italian", "Japanese"),
+    index=None,
+    placeholder="Select your desired language of recipe."
+)
+
+language = st.selectbox("Select language", ["English", "Spanish", "French", "Chinese"])
+prompt += f"\nPlease provide the recipe in {language}."
+
 # Prompt creation
-prompt = f"""Hello there! I am Jaidee, the Dietitian and Chef.  From your request {cuisine} \n
-recipes and want {dietary_preference} meals. \n
+prompt = f"""Hello there! I am Jaidee, the Dietitian and Chef. \n
+From your request {cuisine} recipes and want {dietary_preference} meals. \n
 And don't include recipes that use ingredients with your {allergy} allergy. \n
 You have {ingredient_1}, \n
 {ingredient_2}, \n
@@ -78,7 +88,8 @@ time to prepare
 and the recipe title at the beginning of the response.
 Then include the wine pairing for each recommendation.
 At the end of the recommendation provide the calories associated with the meal
-and the nutritional facts.
+and the nutritional facts. \n
+Please provide the recipe in {language}.
 """
 
 # Button to generate recipes
