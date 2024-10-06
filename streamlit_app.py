@@ -1,12 +1,11 @@
 import streamlit as st
 import logging
 from datetime import date, timedelta
-import requests  # Use for API calls to Gemini AI (replace with actual Gemini API endpoint)
+import requests  # Use for API calls to Gemini AI
 import google.generativeai as genai
 
 # configure logging
 logging.basicConfig(level=logging.INFO)
-
 
 # Capture Gemini API Key 
 gemini_api_key = st.text_input("Gemini API Key: ", placeholder="Type your API Key here...", type="password") 
@@ -21,7 +20,24 @@ if gemini_api_key:
     except Exception as e: 
         st.error(f"An error occurred while setting up the Gemini model: {e}")
 
+# Define the get_gemini_response function
+def get_gemini_response(prompt, config):
+    url = "https://api.gemini-ai.com/v1/generate"  # Replace with actual Gemini API URL
+    headers = {"Authorization": f"Bearer {gemini_api_key}"}  # Use the API key
+    data = {
+        "prompt": prompt,
+        "temperature": config['temperature'],
+        "max_output_tokens": config['max_output_tokens']
+    }
 
+    try:
+        response = requests.post(url, json=data, headers=headers)
+        response.raise_for_status()  # Raise an error for bad HTTP responses
+        return response.json().get("text", "")
+    except requests.exceptions.RequestException as e:
+        st.error(f"Failed to connect to Gemini API: {e}")
+        logging.error(f"Connection Error: {e}")
+        return ""
 
 # Streamlit UI elements
 st.header("JAIDEE Recipe Generator", divider="gray")
@@ -35,7 +51,7 @@ cuisine = st.selectbox(
 
 dietary_preference = st.selectbox(
     "Do you have any dietary preferences?",
-    ("Diabetese", "Glueten free", "Halal", "Keto", "Kosher", "Lactose Intolerance", "Paleo", "Vegan", "Vegetarian", "None"),
+    ("Diabetese", "Gluten free", "Halal", "Keto", "Kosher", "Lactose Intolerance", "Paleo", "Vegan", "Vegetarian", "None"),
     index=None,
     placeholder="Select your desired dietary preference."
 )
@@ -98,15 +114,13 @@ if generate_t2t and prompt:
         else:
             st.error("Failed to retrieve recipes from Gemini API.")
 
-
     # Use Gemini AI to generate a bot response 
     if model: 
         try: 
-    # init model
+            # init model
             response = model.generate_content("You are Expert Chef and nutritionist")
             bot_response = response.text
             st.session_state.chat_history.append(("assistant", bot_response))
-
 
             response = model.generate_content(prompt) 
             bot_response = response.text 
