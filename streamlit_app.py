@@ -64,7 +64,7 @@ wine = st.radio(
 )
 
 # Prompt creation
-prompt = f"""HI I am Jaidee, the Dietitian and Chef.  From your request {cuisine} \n
+prompt = f"""Hello there! I am Jaidee, the Dietitian and Chef.  From your request {cuisine} \n
 recipes and want {dietary_preference} meals. \n
 And don't include recipes that use ingredients with your {allergy} allergy. \n
 You have {ingredient_1}, \n
@@ -72,7 +72,7 @@ You have {ingredient_1}, \n
 and {ingredient_3} \n
 in your kitchen and other ingredients. \n
 From your wine preference is {wine} \n
-Below is some meal recommendations.
+Below are 3 meal recommendations.
 For each recommendation include preparation instructions,
 time to prepare
 and the recipe title at the beginning of the response.
