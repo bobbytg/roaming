@@ -10,8 +10,8 @@ with col2:
     st.write(
         "🥘Jaidee Dietetic Recipe Generator"
     )
-    if st.button("🛸 Let's go"):
-        show_contact_form()
+    st.write("🛸 Let's go")
+
 
 
 # --- About ---
@@ -50,6 +50,7 @@ st.write(
 
 # --- SKILLS ---
 st.write("\n")
+st.align('right')
 st.subheader("POWERED BY MADT", anchor=False)
 st.write(
     """🚀
