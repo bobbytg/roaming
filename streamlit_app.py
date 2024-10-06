@@ -65,7 +65,7 @@ wine = st.radio(
 
 language = st.selectbox(
     "What language of recipe do you desire?",
-    ("English", "Spanish", "Chinese", "French", "Indian", "Italian", "Japanese"),
+    ("English", "Spanish", "Chinese", "French", "Japanese", "Thai"),
     index=None,
     placeholder="Select your desired language of recipe."
 )
@@ -86,7 +86,7 @@ time to prepare
 and the recipe title at the beginning of the response.
 Then include the wine pairing for each recommendation.
 At the end of the recommendation provide the calories associated with the meal
-and the nutritional facts. \n
+and the detalied nutritional facts. \n
 Please provide the recipe in {language}.
 """
 
