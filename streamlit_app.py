@@ -22,24 +22,6 @@ if gemini_api_key:
         st.error(f"An error occurred while setting up the Gemini model: {e}")
 
 
-# Function to call Gemini API
-def get_gemini_response(prompt, config):
-    # Placeholder for the actual Gemini API call.
-    # You would replace this with your real API request
-    url = "https://api.gemini-ai.com/v1/generate"  # Replace with actual Gemini API URL
-    headers = {""}  # Replace with your API key
-    data = {
-        "prompt": prompt,
-        "temperature": config['temperature'],
-        "max_output_tokens": config['max_output_tokens']
-    }
-    
-    response = requests.post(url, json=data, headers=headers)
-    if response.status_code == 200:
-        return response.json().get("text", "")
-    else:
-        st.error("Error calling Gemini API.")
-        return ""
 
 # Streamlit UI elements
 st.header("JAIDEE Recipe Generator", divider="gray")
