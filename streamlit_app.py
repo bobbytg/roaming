@@ -64,9 +64,9 @@ wine = st.radio(
 )
 
 # Prompt creation
-prompt = f"""I am a Chef.  I need to create {cuisine} \n
-recipes for customers who want {dietary_preference} meals. \n
-However, don't include recipes that use ingredients with the customer's {allergy} allergy. \n
+prompt = f"""I am a dietitian and Chef.  From your request {cuisine} \n
+recipes and want {dietary_preference} meals. \n
+And don't include recipes that use ingredients with your {allergy} allergy. \n
 I have {ingredient_1}, \n
 {ingredient_2}, \n
 and {ingredient_3} \n
