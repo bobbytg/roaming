@@ -92,7 +92,7 @@ Then include the wine pairing for each recommendation.
 At the end of the recommendation provide the calories associated with the meal
 Then the detalied nutritional facts \n
 Then prepare the recepe that suitable for someone with {skill_level} cooking skills\n
-And Please provide the recipe in {language}.
+And Please provide all of the recipe in {language}.
 """
 
 # Button to generate recipes
