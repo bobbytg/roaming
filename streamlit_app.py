@@ -63,6 +63,10 @@ drink = st.radio(
     index=None,
 )
 
+skill_level = st.selectbox("Select your cooking skill level", 
+    ["Beginner", "Intermediate", "Expert"]
+)
+
 language = st.selectbox(
     "What language of recipe do you desire?",
     ("English", "Spanish", "Chinese", "French", "Japanese", "Thai"),
@@ -86,7 +90,8 @@ time to prepare
 and the recipe title at the beginning of the response.
 Then include the wine pairing for each recommendation.
 At the end of the recommendation provide the calories associated with the meal
-and the detalied nutritional facts. \n
+Then the detalied nutritional facts. \n
+Then prepare and is suitable for someone with {skill_level} cooking skills."
 Please provide the recipe in {language}.
 """
 
