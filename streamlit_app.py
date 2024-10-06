@@ -1,34 +1,33 @@
 import streamlit as st
 import logging
 from datetime import date, timedelta
-import requests  # Use for API calls to Gemini AI
+import requests  # Use for API calls to Gemini AI (replace with actual Gemini API endpoint)
 import google.generativeai as genai
 
 # configure logging
 logging.basicConfig(level=logging.INFO)
 
-# Store chat history in session state
-if "chat_history" not in st.session_state:
-    st.session_state.chat_history = []
 
-# Capture Gemini API Key
-gemini_api_key = st.text_input("Gemini API Key: ", placeholder="Type your API Key here...", type="password")
+# Capture Gemini API Key 
+gemini_api_key = st.text_input("Gemini API Key: ", placeholder="Type your API Key here...", type="password") 
 
-# Initialize the Gemini Model
-model = None
-if gemini_api_key:
-    try:
-        # Configure Gemini with the provided API Key
-        genai.configure(api_key=gemini_api_key)
-        model = genai.GenerativeModel("gemini-pro")
-        st.success("Gemini API Key successfully configured.")
-    except Exception as e:
+# Initialize the Gemini Model 
+if gemini_api_key: 
+    try: 
+        # Configure Gemini with the provided API Key 
+        genai.configure(api_key=gemini_api_key) 
+        model = genai.GenerativeModel("gemini-pro") 
+        st.success("Gemini API Key successfully configured.") 
+    except Exception as e: 
         st.error(f"An error occurred while setting up the Gemini model: {e}")
+
 
 # Function to call Gemini API
 def get_gemini_response(prompt, config):
+    # Placeholder for the actual Gemini API call.
+    # You would replace this with your real API request
     url = "https://api.gemini-ai.com/v1/generate"  # Replace with actual Gemini API URL
-    headers = {"Authorization": f"Bearer {gemini_api_key}"}  # Use the API key in headers
+    headers = {""}  # Replace with your API key
     data = {
         "prompt": prompt,
         "temperature": config['temperature'],
@@ -59,21 +58,44 @@ dietary_preference = st.selectbox(
     placeholder="Select your desired dietary preference."
 )
 
-allergy = st.text_input("Enter your food allergy:  \n\n", key="allergy", value="peanuts")
+allergy = st.text_input(
+    "Enter your food allergy:  \n\n", key="allergy", value="peanuts"
+)
 
-ingredient_1 = st.text_input("Enter your first ingredient:  \n\n", key="ingredient_1", value="ahi tuna")
-ingredient_2 = st.text_input("Enter your second ingredient:  \n\n", key="ingredient_2", value="chicken breast")
-ingredient_3 = st.text_input("Enter your third ingredient:  \n\n", key="ingredient_3", value="tofu")
+ingredient_1 = st.text_input(
+    "Enter your first ingredient:  \n\n", key="ingredient_1", value="ahi tuna"
+)
 
-wine = st.radio("What is your customer's wine preference?", ["Red", "White", "None"], index=None)
+ingredient_2 = st.text_input(
+    "Enter your second ingredient:  \n\n", key="ingredient_2", value="chicken breast"
+)
+
+ingredient_3 = st.text_input(
+    "Enter your third ingredient:  \n\n", key="ingredient_3", value="tofu"
+)
+
+wine = st.radio(
+    "What is your customer's wine preference?",
+    ["Red", "White", "None"],
+    index=None,
+)
 
 # Prompt creation
-prompt = f"""I am a Chef.  I need to create {cuisine} recipes for customers who want {dietary_preference} meals. 
-However, don't include recipes that use ingredients with the customer's {allergy} allergy.
-I have {ingredient_1}, {ingredient_2}, and {ingredient_3} in my kitchen and other ingredients.
-The customer's wine preference is {wine}. Please provide some meal recommendations.
-For each recommendation include preparation instructions, time to prepare, and the recipe title at the beginning of the response.
-Then include the wine pairing for each recommendation. At the end of the recommendation, provide the calories associated with the meal and the nutritional facts.
+prompt = f"""I am a Chef.  I need to create {cuisine} \n
+recipes for customers who want {dietary_preference} meals. \n
+However, don't include recipes that use ingredients with the customer's {allergy} allergy. \n
+I have {ingredient_1}, \n
+{ingredient_2}, \n
+and {ingredient_3} \n
+in my kitchen and other ingredients. \n
+The customer's wine preference is {wine} \n
+Please provide some meal recommendations.
+For each recommendation include preparation instructions,
+time to prepare
+and the recipe title at the beginning of the response.
+Then include the wine pairing for each recommendation.
+At the end of the recommendation provide the calories associated with the meal
+and the nutritional facts.
 """
 
 # Configuration for generation
@@ -94,18 +116,20 @@ if generate_t2t and prompt:
         else:
             st.error("Failed to retrieve recipes from Gemini API.")
 
-# Use Gemini AI to generate a bot response if model is initialized
-if model:
-    try:
-        # Generate a chat-based bot response
-        chef_intro = model.generate_content("You are an expert chef and nutritionist")
-        st.session_state.chat_history.append(("assistant", chef_intro.text))
 
-        recipe_response = model.generate_content(prompt)
-        st.session_state.chat_history.append(("assistant", recipe_response.text))
-        
-        # Display the conversation
-        for role, message in st.session_state.chat_history:
-            st.chat_message(role).markdown(message)
-    except Exception as e:
-        st.error(f"An error occurred while generating the response: {e}")
+    # Use Gemini AI to generate a bot response 
+    if model: 
+        try: 
+    # init model
+            response = model.generate_content("You are Expert Chef and nutritionist")
+            bot_response = response.text
+            st.session_state.chat_history.append(("assistant", bot_response))
+
+
+            response = model.generate_content(prompt) 
+            bot_response = response.text 
+            # Store and display the bot response 
+            st.session_state.chat_history.append(("assistant", bot_response)) 
+            st.chat_message("assistant").markdown(bot_response) 
+        except Exception as e:
+            st.error(f"An error occurred while generating the response: {e}")
