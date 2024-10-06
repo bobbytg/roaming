@@ -25,7 +25,7 @@ if gemini_api_key:
         st.error(f"An error occurred while setting up the Gemini model: {e}")
 
 # Streamlit UI elements
-st.header("JAIDEE Recipe Generator", divider="gray")
+st.header("Jaidee Dietetic Recipe Generator", divider="gray")
 
 cuisine = st.selectbox(
     "What cuisine do you desire?",
@@ -64,15 +64,15 @@ wine = st.radio(
 )
 
 # Prompt creation
-prompt = f"""I am a dietitian and Chef.  From your request {cuisine} \n
+prompt = f"""HI I am Jaidee, the Dietitian and Chef.  From your request {cuisine} \n
 recipes and want {dietary_preference} meals. \n
 And don't include recipes that use ingredients with your {allergy} allergy. \n
-I have {ingredient_1}, \n
+You have {ingredient_1}, \n
 {ingredient_2}, \n
 and {ingredient_3} \n
-in my kitchen and other ingredients. \n
-The customer's wine preference is {wine} \n
-Please provide some meal recommendations.
+in your kitchen and other ingredients. \n
+From your wine preference is {wine} \n
+Below is some meal recommendations.
 For each recommendation include preparation instructions,
 time to prepare
 and the recipe title at the beginning of the response.
