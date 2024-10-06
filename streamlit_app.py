@@ -57,9 +57,9 @@ ingredient_3 = st.text_input(
     "Enter your third ingredient:  \n\n", key="ingredient_3", value="tofu"
 )
 
-wine = st.radio(
-    "What is your customer's wine preference?",
-    ["Red", "White", "None"],
+drink = st.radio(
+    "What is your drink preference?",
+    ["Green Tea","Mint Tea", "Smoothies", "Coconut Water","None"],
     index=None,
 )
 
@@ -73,13 +73,13 @@ language = st.selectbox(
 
 # Prompt creation
 prompt = f"""Hello there! I am Jaidee, the Dietitian and Chef. \n
-From your request {cuisine} recipes and want {dietary_preference} meals. \n
+From your request healthty {cuisine} recipes and want {dietary_preference} meals. \n
 And don't include recipes that use ingredients with your {allergy} allergy. \n
 You have {ingredient_1}, \n
 {ingredient_2}, \n
 and {ingredient_3} \n
 in your kitchen and other ingredients. \n
-From your wine preference is {wine} \n
+From your drink preference is {drink} \n
 Below is meal recommendations from your ingredients.
 For each recommendation include preparation instructions,
 time to prepare
