@@ -50,7 +50,6 @@ st.write(
 
 # --- SKILLS ---
 st.write("\n")
-st.align('right')
 st.subheader("POWERED BY MADT", anchor=False)
 st.write(
     """🚀
