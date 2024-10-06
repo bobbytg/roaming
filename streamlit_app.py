@@ -3,17 +3,16 @@ import streamlit as st
 
 # --- PAGE SETUP ---
 about_page = st.Page(
-    "views/about_me.py",
+    "views/about_page.py",
     title="About Me",
     icon=":material/account_circle:",
     default=True,
 )
 jaidee_page = st.Page(
     "views/jaidee.py",
-    title="Sales Dashboard",
-    icon=":material/bar_chart:",
+    title="Jaidee AI Apps",
+    icon=":material/smart_toy:",
 )
-
 
 
 # --- NAVIGATION SETUP [WITHOUT SECTIONS] ---
@@ -23,7 +22,7 @@ jaidee_page = st.Page(
 pg = st.navigation(
     {
         "Info": [about_page],
-        "Projects": [jaidee_page],
+        "Projects": [jaidee_page]
     }
 )
 
