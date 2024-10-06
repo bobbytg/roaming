@@ -72,7 +72,7 @@ You have {ingredient_1}, \n
 and {ingredient_3} \n
 in your kitchen and other ingredients. \n
 From your wine preference is {wine} \n
-Below is meal recommendations.
+Below is meal recommendations from your ingredients.
 For each recommendation include preparation instructions,
 time to prepare
 and the recipe title at the beginning of the response.
