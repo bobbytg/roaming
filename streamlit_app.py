@@ -70,8 +70,6 @@ language = st.selectbox(
     placeholder="Select your desired language of recipe."
 )
 
-language = st.selectbox("Select language", ["English", "Spanish", "French", "Chinese"])
-prompt += f"\nPlease provide the recipe in {language}."
 
 # Prompt creation
 prompt = f"""Hello there! I am Jaidee, the Dietitian and Chef. \n
