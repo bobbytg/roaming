@@ -1,16 +1,20 @@
 import streamlit as st
 import logging
 from datetime import date, timedelta
-import requests  # Use for API calls to Gemini AI
 import google.generativeai as genai
 
 # configure logging
 logging.basicConfig(level=logging.INFO)
 
+# Initialize session state for storing chat history
+if "chat_history" not in st.session_state:
+    st.session_state["chat_history"] = []  # Initialize chat history
+
 # Capture Gemini API Key 
 gemini_api_key = st.text_input("Gemini API Key: ", placeholder="Type your API Key here...", type="password") 
 
 # Initialize the Gemini Model 
+model = None
 if gemini_api_key: 
     try: 
         # Configure Gemini with the provided API Key 
@@ -19,25 +23,6 @@ if gemini_api_key:
         st.success("Gemini API Key successfully configured.") 
     except Exception as e: 
         st.error(f"An error occurred while setting up the Gemini model: {e}")
-
-# Define the get_gemini_response function
-def get_gemini_response(prompt, config):
-    url = "https://api.gemini-ai.com/v1/generate"  # Replace with actual Gemini API URL
-    headers = {"Authorization": f"Bearer {gemini_api_key}"}  # Use the API key
-    data = {
-        "prompt": prompt,
-        "temperature": config['temperature'],
-        "max_output_tokens": config['max_output_tokens']
-    }
-
-    try:
-        response = requests.post(url, json=data, headers=headers)
-        response.raise_for_status()  # Raise an error for bad HTTP responses
-        return response.json().get("text", "")
-    except requests.exceptions.RequestException as e:
-        st.error(f"Failed to connect to Gemini API: {e}")
-        logging.error(f"Connection Error: {e}")
-        return ""
 
 # Streamlit UI elements
 st.header("JAIDEE Recipe Generator", divider="gray")
@@ -96,35 +81,24 @@ At the end of the recommendation provide the calories associated with the meal
 and the nutritional facts.
 """
 
-# Configuration for generation
-config = {
-    "temperature": 0.8,
-    "max_output_tokens": 2048,
-}
-
 # Button to generate recipes
 generate_t2t = st.button("Generate my recipes.", key="generate_t2t")
-if generate_t2t and prompt:
-    with st.spinner("Generating your recipes using Gemini..."):
-        response = get_gemini_response(prompt, config)
-        if response:
-            st.write("Your recipes:")
-            st.write(response)
-            logging.info(response)
-        else:
-            st.error("Failed to retrieve recipes from Gemini API.")
 
+# Display previous chat history using st.chat_message
+for role, message in st.session_state.chat_history:
+    st.chat_message(role).markdown(message)
+
+# Generating the recipe
+if generate_t2t and prompt:
+    st.session_state.chat_history.append(("user", prompt))
+    st.chat_message("user").markdown(prompt)
+    
     # Use Gemini AI to generate a bot response 
     if model: 
         try: 
-            # init model
-            response = model.generate_content("You are Expert Chef and nutritionist")
+            # Use Gemini to generate a response for the recipe prompt
+            response = model.generate_content(prompt)
             bot_response = response.text
-            st.session_state.chat_history.append(("assistant", bot_response))
-
-            response = model.generate_content(prompt) 
-            bot_response = response.text 
-            # Store and display the bot response 
             st.session_state.chat_history.append(("assistant", bot_response)) 
             st.chat_message("assistant").markdown(bot_response) 
         except Exception as e:
