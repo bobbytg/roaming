@@ -41,7 +41,7 @@ st.write(
    which generates a customized recipe in short time.
 
 3. Display Recipe: The app displays the recipe along with additional features like preparation time, 
-   cooking instructions, wine pairing, and nutritional information.
+   cooking instructions, Drink pairing, and nutritional information.
 
 4. Chat Interface: Users can interact with the AI in a conversational way, asking for clarification, 
    additional recipes, or substitutions.
