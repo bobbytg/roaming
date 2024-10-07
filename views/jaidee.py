@@ -42,19 +42,19 @@ dietary_preference = st.selectbox(
 )
 
 allergy = st.text_input(
-    "Enter your food allergy:  \n\n", key="allergy", value="peanuts"
+    "Enter your food allergy:  \n\n", key="allergy", value="Soybeans"
 )
 
 ingredient_1 = st.text_input(
-    "Enter your first ingredient:  \n\n", key="ingredient_1", value="ahi tuna"
+    "Enter your first ingredient:  \n\n", key="ingredient_1", value="Wagyu A5"
 )
 
 ingredient_2 = st.text_input(
-    "Enter your second ingredient:  \n\n", key="ingredient_2", value="chicken breast"
+    "Enter your second ingredient:  \n\n", key="ingredient_2", value="Mushroom"
 )
 
 ingredient_3 = st.text_input(
-    "Enter your third ingredient:  \n\n", key="ingredient_3", value="tofu"
+    "Enter your third ingredient:  \n\n", key="ingredient_3", value="Cheese"
 )
 
 drink = st.radio(
